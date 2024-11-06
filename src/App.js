@@ -22,8 +22,7 @@ function App() {
     return (
       <div>
       <h1>My Hacker Stories</h1>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+      <Search />
       <hr />
       <ul>
       {list.map(function (item) {
@@ -40,7 +39,15 @@ function App() {
         );
       })}
       </ul>
-      <h1> HELLO WORLD!</h1>
+      
+    </div>
+  );
+}
+function Search (){
+  return (
+    <div>
+      <label htmlFor='search'>Search: </label>
+      <input id='search' type="text" />
     </div>
   );
 }
