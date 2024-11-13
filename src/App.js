@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const list = [
+const stories = [
   {
   title: 'React',
   url: 'https://reactjs.org/',
@@ -19,36 +19,63 @@ const list = [
 },
 ];
 
+
+
 const App = () => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const handleSearch = (event)=>{
+    setSearchTerm(event.target.value);
+  }
+
+  const searchedStories = stories.filter(function(story){
+    return story.title.includes(searchTerm);
+  });
   return (
     <div>
       <h1>My Hacker Stories</h1>
-      <Search />
+      <Search onSearch={handleSearch}/>
       <hr />
-      <List />
+      <List list={searchedStories}/>
+      <Press/>
+      <hr />
+      
     </div>
+
 ); }
-const Search =  () => {
+const Search = (props) => {
   return (
     <div>
       <label htmlFor='search'>Search: </label>
-      <input id='search' type="text" />
+      <input id='search' type="text" onChange={props.onSearch}/>
     </div>
   );
 }
-const List = () => {
+const List = (props) => (
+  <ul>
+    {props.list.map((item) => (
+      <Item key={item.objectID} item={item} />
+))} </ul>
+);
+
+const Item = (props) => (
+  <li>
+    <span>
+      <a href={props.item.url}>{props.item.title}</a>
+    </span>
+    <span>{props.item.author}</span>
+    <span>{props.item.num_comments}</span>
+    <span>{props.item.points}</span>
+  </li>
+);
+
+const Press = () => {
+  const handleClick = (event) => {
+    console.log("You pressed the button");
+  }
   return (
-    <ul>
-      {list.map(function (item) {
-        return (
-          <li key={item.objectID}>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-</li> );
-})} </ul>
-); }
+    <>
+    <button className = "button-49" onClick={handleClick}>Button 49</button>
+    </>
+  );
+}
 export default App;
